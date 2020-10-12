@@ -17,6 +17,8 @@ Thanks!
 |Forecasted Entries for Competition| 66.21 | 66.76 |
 
 
+
+_______________________
 > **EVALUATION by Xenia**. - *October 12, 2020.*
 
 **Comments:**
@@ -25,8 +27,9 @@ Thanks!
 - The function was clear and had docstrings inside that were useful to understand the process.
 - There were some descriptively variables. For example:
     - mydata
-     - last_week_flow
+    - last_week_flow
 - There were not long codes repetitions, so that is great! The code was elegantly written.
+- Great job with the function! Wish I could do mine like that! (I will practice :3 )
 
 >RUBRIC Evaluation
 - Readability: 3/3
