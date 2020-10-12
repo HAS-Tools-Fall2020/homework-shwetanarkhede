@@ -1,6 +1,6 @@
 # Autoregressive Model for forecasting weekly streamflow
 # Modified by: Shweta Narkhede
-# Last edited: Oct 5th, 2020
+# Last edited: Oct 12, 2020. By Xenia.
 
 # %%
 # Importing the modules
@@ -14,8 +14,7 @@ import datetime
 # %%
 # Accessing data
 filename = 'streamflow_week7.txt'
-filepath = os.path.join('/Users/owner/Documents/GitHub/\
-homework-shwetanarkhede/Submissions/Code_Review1', filename)
+filepath = os.path.join(r'C:\Users\xy_22\Documents\MSc._Hydrology\2020_Fall\599-HAS_Tools\homework-shwetanarkhede\Submissions\Code_Review1', filename)
 print(os.getcwd())
 print(filepath)
 
@@ -56,6 +55,8 @@ flow_weekly['flow_tm8'] = flow_weekly['flow'].shift(8)
 
 # Step 2: Selecting data to use for prediction
 # Using data from 2006 onwards
+# Xenia: Here, instead of 2006, as the comments said, we are using data from \
+# August to October, since 2018 to the current year.
 mydata = flow_weekly[
     (flow_weekly['year'] >= 2018) &
     (flow_weekly['month'] <= 10) &
@@ -113,7 +114,10 @@ def AR_Model(x_train, y_train, x_test, y_test, last_week_flow, trainindex):
     ax.set(title="Model Training", xlabel="Date",
            ylabel="Weekly Avg Flow [cfs]", yscale='log')
     ax.legend()
-    fig.set_size_inches(5, 3)
+    fig.set_size_inches(8, 3)
+    
+    # Xenia: Here I just increase the width of the plot from 5 to 8, because
+    # the numbers were overlapping.
 
     # Predicting flows with fitted AR Model
     nextweek_prediction = model.predict(last_week_flow.values)
@@ -138,7 +142,10 @@ last_week_flow = mydata.tail(1)[['flow_tm1', 'flow_tm2', 'flow_tm3',
                                  'flow_tm4', 'flow_tm5', 'flow_tm6',
                                  'flow_tm7', 'flow_tm8']]
 model1_pred = AR_Model(x1_train, y1_train, x1_test,
-                       y1_test, last_week_flow, trainindex)
+                       y1_test, last_week_flow, trainindex).round(2)
+
+# Xenia: I added above, the round function at the end of model1_pred to avoid
+# long numbers.
 print('Week 1 Forecast = ', model1_pred[0], 'cfs')
 
 # %%
@@ -154,9 +161,12 @@ last_week_flow2 = mydata.tail(1)[['flow_tm2', 'flow_tm4', 'flow_tm6',
                                   'flow_tm8']]
 
 model2_pred = AR_Model(x2_train, y2_train, x2_test,
-                       y2_test, last_week_flow2, trainindex)
+                       y2_test, last_week_flow2, trainindex).round(2)
 
+# Xenia: I added above, the round function at the end of model2_pred to avoid
+# long numbers.
 print('Week 2 Forecast = ', model2_pred[0], 'cfs')
+
 # %%
 # Extra informative plots
 
