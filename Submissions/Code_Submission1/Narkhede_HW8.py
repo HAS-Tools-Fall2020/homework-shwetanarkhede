@@ -42,11 +42,17 @@ flow_weekly = data.resample("W", on='datetime').mean()
 
 for i in range(1, 9):
     flow_weekly[i] = flow_weekly['flow'].shift(i)
+
+#LC you could com up with the column names inside your loop rather 
+#than renaming them after 
+
 flow_weekly = flow_weekly.rename(columns={
     1: 'tm1', 2: 'tm2', 3: 'tm3', 4: 'tm4', 5: 'tm5',
     6: 'tm6', 7: 'tm7', 8: 'tm8'})
 
 # Step 2: Selecting data to use for prediction
+# LC - It looks like you are grabbing out all the rows of data so you could 
+#  skip the part on line 59?
 mydata = flow_weekly[(flow_weekly['year'] >= 2018) &
                      (flow_weekly['month'] <= 10) &
                      (flow_weekly['month'] >= 8)]
@@ -55,7 +61,7 @@ mydata = flow_weekly[(flow_weekly['year'] >= 2018) &
 # %%
 # Creating function to use Auto-regressive model multiple times
 
-
+# LC - great  function, nice documentation.
 def AR_Model(x, y, last_week_flow):
     """ fucntion for AR model
 
@@ -91,6 +97,8 @@ def AR_Model(x, y, last_week_flow):
 predicted_flows = pd.DataFrame(columns=["Week", "Flow"])
 
 # For loop for making predictions for 16 weeks
+# LC - you could set ['tm1', 'tm2', 'tm3', 'tm4','tm5', 'tm6', 'tm7', 'tm8']
+# As a list and then just reference it here rather than repeating it multiple times
 for i in range(16):
     x1 = mydata[['tm1', 'tm2', 'tm3', 'tm4',
                  'tm5', 'tm6', 'tm7', 'tm8']].values
