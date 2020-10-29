@@ -1,6 +1,11 @@
 # Homework # 9 (Week 9)
 ## Name: Shweta Narkhede
 #### Submission date: Oct, 26th, 2020
+__
+## Grade
+3/3 - Nice work!
+
+- Note though that your graphs did not come in. Please check that these are working from the submissions folder next time. You can try the atom plug in too if that helps. 
 ___
 ## **Assignment Questions**
 ___
