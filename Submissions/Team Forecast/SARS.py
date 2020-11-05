@@ -13,60 +13,32 @@ import urllib
 import model_function as mf
 from sklearn.linear_model import LinearRegression
 # %%
-# Getting data from MesoWest
+site = '09506000'
+start = "2000-10-08"
+end = "2020-10-24"
 
-# Creating the URL for the rest API using token
-mytoken = 'demotoken'  # '9b2f7a84186d4f70b31786c32f4032bb'
+url = "https://waterdata.usgs.gov/nwis/dv?cb_00060=on&format=rdb&site_no=" \
+      + site + "&referred_module=sw&period=&begin_date=" + start + \
+      "&end_date=" + end
+# $ Only works if you select tab seperated data
+data2 = pd.read_table(url, sep='\t', skiprows=30,
+                      names=['agency_cd', 'site_no',
+                             'datetime', 'flow', 'code'],
+                      parse_dates=['datetime'])
 
-# Base url
-base_url = "http://api.mesowest.net/v2/stations/timeseries"
+# Expanding the dates to year, month, day and day of week
+data2['year'] = pd.DatetimeIndex(data2['datetime']).year
+data2['month'] = pd.DatetimeIndex(data2['datetime']).month
+data2['day'] = pd.DatetimeIndex(data2['datetime']).day
+data2['dayofweek'] = pd.DatetimeIndex(data2['datetime']).dayofweek
 
-# Specific arguments for the data that we want
-args = {
-    'start': '200001010000',
-    'end': '202010240000',
-    'obtimezone': 'UTC',
-    'vars': 'precip_accum',
-    'stids': 'QVDA3',
-    'units': 'precip|in',
-    'token': mytoken}
+# Aggregating flow values to weekly (weekly averaged flow)
+flow_weekly = data2.resample("W", on='datetime').mean()
 
-apiString = urllib.parse.urlencode(args)
-print(apiString)
-
-# adding the API string to the base_url
-fullUrl = base_url + '?' + apiString
-print(fullUrl)
-
-# Requesting data and reading it in complete format
-response = req.urlopen(fullUrl)
-responseDict = json.loads(response.read())
-
-# Keys shows you the main elements of your dictionary
-responseDict.keys()
-responseDict['UNITS']
-
-# Each key in the dictionary can link to different data structures
-type(responseDict['UNITS'])
-responseDict['UNITS'].keys()
-responseDict['UNITS']['precip_accum']
-
-# If we grab the first element of the list that is a dictionary
-type(responseDict['STATION'][0])
-# And these are its keys
-responseDict['STATION'][0].keys()
-
-# Getting precipitation data that we wanted from website
-dateTime = responseDict['STATION'][0]['OBSERVATIONS']['date_time']
-precip = responseDict['STATION'][0]['OBSERVATIONS']['precip_accum_set_1']
-
-# Combining precipitation data and date index into a dataframe
-data = pd.DataFrame({'Precipitation': precip}, index=pd.to_datetime(dateTime))
-
-# Converting data to weekly average
-precip_weekly = data.resample('W').mean()
-ptindex = precip_weekly.index
-
+# Combining both time series in single dataframe
+Comb_data = flow_weekly
+precip = precip_weekly.Precipitation
+Comb_data['Precipitation'] = precip.values
 # %%
 for i in range(1, 9):
     flow_weekly['tm' '%s' % (i)] = flow_weekly['flow'].shift(i)
