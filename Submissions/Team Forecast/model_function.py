@@ -1,4 +1,5 @@
 # %%
+# Alcely: Apparently it must be in the same folder than the main script.
 import numpy as np
 from sklearn.linear_model import LinearRegression
 

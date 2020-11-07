@@ -1,6 +1,6 @@
-# Homework Assignment # 9 (Week 9)
-# Modified by : Shweta Narkhede
-# Last modified on: Oct 25th, 2020
+# Homework Assignment # 11 (Week 11)
+# Modified by : SARS
+# Last modified on: Nov 7th, 2020
 
 
 # %%
@@ -12,6 +12,7 @@ import urllib.request as req
 import urllib
 import model_function as mf
 from sklearn.linear_model import LinearRegression
+
 # %%
 site = '09506000'
 start = "2000-10-08"
@@ -37,8 +38,7 @@ flow_weekly = data2.resample("W", on='datetime').mean()
 
 # Combining both time series in single dataframe
 Comb_data = flow_weekly
-precip = precip_weekly.Precipitation
-Comb_data['Precipitation'] = precip.values
+
 # %%
 for i in range(1, 9):
     flow_weekly['tm' '%s' % (i)] = flow_weekly['flow'].shift(i)
@@ -55,47 +55,15 @@ mydata = Comb_data[(Comb_data['year'] >= 2019) &
 
 # %%
 # Using AR_model function to predict streamflows for 16 weeks
-
-# (I tried to put this function in seperate script, but then it gives me an
-# error of undefined name LinerRegression)
 # Creating empty dataframe for storing predicted flows
 predicted_flows = pd.DataFrame(columns=["Week", "Flow"])
-
-
-def AR_Model(x, y, last_week_flow):
-    """ fucntion for AR model
-
-    Parameters
-    ----------
-    input : arrays and dataframes
-    x & y are arrays of training datasets while last_week_flow is
-    the dataframe of latest flow record.
-
-    Returns
-    ------
-    output : array
-    Output is a flow value of week1 prediction in cfs
-    """
-    # Fitting AR model to training dataset
-    model = LinearRegression().fit(x, y)
-
-    # Printing model fitting parameters
-    r_sq1 = model.score(x, y)
-    print('Coefficient of Determination = ', np.round(r_sq1, 2))
-
-    # Predicting flows with fitted AR Model
-    nextweek_prediction = model.predict(last_week_flow.values)
-
-    # Output of this function will be printed as forecasted streamflow
-    return nextweek_prediction
-
 
 # For loop for making predictions for 16 weeks
 for i in range(16):
     x1 = mydata[lag_cols].values
     y1 = mydata[['flow']].values
     last_week_flow = mydata.tail(1)[lag_cols]
-    nextweek_pred = AR_Model(x1, y1, last_week_flow).round(2)
+    nextweek_pred = mf.AR_Model(x1, y1, last_week_flow).round(2)
 
     mydata = mydata.append({'flow': nextweek_pred,
                             'tm1': mydata.flow[(mydata.flow.size-1)],
@@ -112,3 +80,5 @@ for i in range(16):
         {'Week': [i+1], 'Flow': nextweek_pred}, ignore_index=True)
 
 print(predicted_flows)
+
+# %%
