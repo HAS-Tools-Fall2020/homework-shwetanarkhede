@@ -6,11 +6,11 @@
 # %%
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import json
 import urllib.request as req
 import urllib
 import model_function as mf
+import plot_function as plotf
 from sklearn.linear_model import LinearRegression
 
 # %%
@@ -80,5 +80,23 @@ for i in range(16):
         {'Week': [i+1], 'Flow': nextweek_pred}, ignore_index=True)
 
 print(predicted_flows)
+
+# %%
+# Plotting section:
+# Previous steps: creating some additional dataset to plot.
+# Calculating the historical daily mean without 2020
+
+hist_flow = plotf.hist_daily_mean(data2, 2020)
+
+# Calculating the weekly mean
+week_hist = plotf.weekly_mean(hist_flow, 8, 22, 16)
+week_2019 = plotf.weekly_mean(data2, 8, 22, 16, 2019)
+
+# From the forecast dataframe
+week_forecast = predicted_flows['Flow'].T
+
+# Finally, plotting
+
+plotf.plot_3series(week_hist, week_2019, week_forecast, 2019)
 
 # %%
