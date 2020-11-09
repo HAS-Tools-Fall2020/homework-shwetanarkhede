@@ -90,6 +90,8 @@ Forecast_entries['Flow'] = aggregate.T
 Forecast_entries['Week'] = range(1, 17)
 Forecast_entries = Forecast_entries.set_index('Week')
 print(Forecast_entries)
+print('Week 1 forecast = ', Forecast_entries.Flow[current_week+1],
+      ' and Week 2 Forecast = ', Forecast_entries.Flow[current_week+2])
 # %%
 # Plotting section:
 # Previous steps: creating some additional dataset to plot.
