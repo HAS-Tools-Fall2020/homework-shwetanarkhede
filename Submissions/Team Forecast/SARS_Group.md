@@ -21,7 +21,6 @@ Below is a map of the Verde River watershed. I am happy that I was able to get i
 ![area map](map_verde.png)
 
 ## Graph of our forecast plot
-This does not appear to be loading in correctly. Frustrating.
+now do you see the graph?
 
-
-![Forecast plot](graph_plot.PNG)
+![](assets/SARS_Group-e3b8e625.png)
