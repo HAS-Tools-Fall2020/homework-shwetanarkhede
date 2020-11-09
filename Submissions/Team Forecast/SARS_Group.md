@@ -21,6 +21,6 @@ Below is a map of the Verde River watershed. I am happy that I was able to get i
 ![area map](map_verde.png)
 
 ## Graph of our forecast plot
-now do you see the graph?
+The graph illustrates the 16 weeks forecast, the 2020 observed flow, and the historical flow (1989 - 2019) as a base-line.
 
 ![](assets/SARS_Group-e3b8e625.png)
