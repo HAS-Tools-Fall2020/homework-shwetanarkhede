@@ -92,6 +92,7 @@ Forecast_entries = Forecast_entries.set_index('Week')
 print(Forecast_entries)
 print('Week 1 forecast = ', Forecast_entries.Flow[current_week+1],
       ' and Week 2 Forecast = ', Forecast_entries.Flow[current_week+2])
+
 # %%
 # Plotting section:
 # Previous steps: creating some additional dataset to plot.
@@ -99,14 +100,17 @@ print('Week 1 forecast = ', Forecast_entries.Flow[current_week+1],
 
 hist_flow = plotf.hist_daily_mean(data2, 2020)
 
-# Calculating the weekly mean
-week_hist = plotf.weekly_mean(hist_flow, 8, 22, 16)
-week_2019 = plotf.weekly_mean(data2, 8, 22, 16, 2019)
+# Calculating the weekly mean & joining in the
+# same dataframe that the forecast.
+Forecast_entries['week_hist'] = plotf.weekly_mean(hist_flow, 8, 22, 16)
+Forecast_entries['week_2020'] = plotf.weekly_mean(data2, 8, 22, 10, 2020)
 
-# From the forecast dataframe
-week_forecast = Forecast_entries['Flow'].T
+# Finally, plotting the forecast, the 2020 observed (real) flow and
+# the historical (1989-2019) mean as reference.
+# NOTE: the plot function save the figure in the team folder.
 
-# Finally, plotting
-plotf.plot_3series(week_hist, week_2019, week_forecast, 2019)
+plotf.plot_3series(Forecast_entries['week_hist'].T,
+                   Forecast_entries['week_2020'].T,
+                   Forecast_entries['Flow'].T, 2020)
 
 # %%

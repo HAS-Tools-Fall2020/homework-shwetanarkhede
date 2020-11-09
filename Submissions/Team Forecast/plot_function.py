@@ -119,8 +119,7 @@ def plot_3series(historical, observed, predicted, observed_year):
     ax.plot(predicted, color='black', label='weekly predicted flows',
             linestyle="--")
     ax.set(title="Observed & Predicted Flow", xlabel="Weeks", 
-           ylabel="Weekly Avg Flow [cfs]",
-           yscale='log')
+           ylabel="Weekly Avg Flow [cfs]")
     ax.legend()
 
     fig.savefig('plot.png')
