@@ -22,8 +22,12 @@ import contextily as ctx
 file = os.path.join('E://datasets//gagesII_9322_sept30_2011.shp')
 gages = gpd.read_file(file)
 
-# Variable containing only Arizona gages
+# Arizona gages
 gages_az=gages[gages['STATE']=='AZ']
+
+# Isolate verde river gage (via station ID) and project onto gages map
+verde_stid = gages_az[gages_az['STAID'] == '09506000']
+verde_gage = verde_stid.to_crs(gages_az.crs)
 
 
 # %% 
@@ -57,20 +61,6 @@ river_verde_project = river_Verde.to_crs(gages_az.crs)
 
 
 # %%
-# Add data point for the Verde River gage using coordinates
-verde_np = np.array([[-111.7891667, 34.44833333]])
-
-# Turn data point into spatial feature
-verde_geom = [Point(xy) for xy in verde_np]
-
-# Make a dataframe of the data point
-verde = gpd.GeoDataFrame(verde_geom, columns= ['geometry'], crs=HUC6.crs)
-
-# Re-project onto gages map
-verde_point = verde.to_crs(gages_az.crs)
-
-
-# %%
 # Function: plot variables and data onto a single map
 def plot_map(dcolumn='DRAIN_SQKM', categorical=False,
               legend=True, markersize=45, cmap='RdBu',
@@ -89,7 +79,7 @@ def plot_map(dcolumn='DRAIN_SQKM', categorical=False,
     HUC6_verde_project.boundary.plot(ax=ax, label='Verde Watershed', color=None, edgecolor='black', linewidth=2, zorder=2)
     az_proj_rivers.plot(ax=ax, label='Rivers', color='blue', zorder=3, alpha=0.4)
     river_verde_project.plot(ax=ax, label='Verde River', linewidth=2, color='blue', zorder=4)
-    verde_point.plot(ax=ax, label='Verde River Gage', color='red', edgecolor='white', marker='v', markersize=250, zorder=6)
+    verde_gage.plot(ax=ax, label='Verde River Gage', color='red', edgecolor='white', marker='v', markersize=250, zorder=6)
     ctx.add_basemap(ax, crs=gages_az.crs, url=ctx.providers.OpenTopoMap, zorder=0, alpha=0.5)
 
     # Plot axis/data titles
@@ -98,6 +88,8 @@ def plot_map(dcolumn='DRAIN_SQKM', categorical=False,
     ax.set_ylabel('Easting (m)')
     ax.legend()  
     return fig, ax
+  
+  
 # %%
 # Run function to plot data and save as image
 fig, ax = plot_map(gages_az)  
