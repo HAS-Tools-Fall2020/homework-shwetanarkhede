@@ -84,8 +84,8 @@ def plot_map(dcolumn='DRAIN_SQKM', categorical=False,
 
     # Plot axis/data titles
     ax.set_title('Verde River Stream Gage', fontsize=20)
-    ax.set_xlabel('Northing (m)')
-    ax.set_ylabel('Easting (m)')
+    ax.set_xlabel('Easting (m)')
+    ax.set_ylabel('Northing (m)')
     ax.legend()  
     return fig, ax
   
