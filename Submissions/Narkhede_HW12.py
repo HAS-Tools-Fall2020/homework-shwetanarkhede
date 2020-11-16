@@ -171,7 +171,7 @@ mydata = Comb_data[(Comb_data['year'] >= 2020) &
 # Forecast using AR Model
 
 predicted_flows = pd.DataFrame(columns=["Week", "Flow"])
-current_week = 1
+current_week = 12
 inputs = ['tm1', 'tm2', 'tm3', 'tm4', 'tm5',
           'tm6', 'tm7', 'tm8', 'Precip', 'Air_temp']
 # For loop for making predictions for 16 weeks
