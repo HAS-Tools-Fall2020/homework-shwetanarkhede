@@ -2,6 +2,9 @@
 ## Name: Shweta Narkhede
 #### Submission date: Nov, 16th, 2020
 ___
+### Grade
+3/3 - Great job!
+___
 ## **Assignment Questions**
 
 **1. A brief summary of the how you chose to generate your forecast this week.**
