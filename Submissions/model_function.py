@@ -23,7 +23,7 @@ def AR_Model(x, y, last_week_flow):
 
     # Printing model fitting parameters
     r_sq1 = model.score(x, y)
-    print('Coefficient of Determination = ', np.round(r_sq1, 2))
+    # print('Coefficient of Determination = ', np.round(r_sq1, 2))
 
     # Predicting flows with fitted AR Model
     nextweek_prediction = model.predict(last_week_flow)
