@@ -2,6 +2,9 @@
 ## Name: Shweta Narkhede
 #### Submission date: Dec 6th, 2020
 ___
+#### Grade
+3/3 - Nice work, sorry to hear that it was challenging to run. It sounds like you ran into very similar issues as other people in the class. Hopefully we can discuss more in class tomorrow.
+___
 ## **Assignment Questions**
 
 1. **What resources did you request on Ocelote? How long did you wait in the queue for your job to run and how long did it take to run?**
@@ -10,7 +13,7 @@ ___
 
 2. **What was the most confusing part to you about setting up and running your job on Ocelote?**
 
-I failed to setup .pbs file couple of times even after following all instruction correctly. I used .pbs given in starter code and mopdified it to run for my python script and required time (10 minutes). I could not visually identify any difference in .pbs file I generated and you provided. So I kept scratching my head to see where did I go wrong. Although, using pbs file given in starter code, I coukld get my python script to run. 
+I failed to setup .pbs file couple of times even after following all instruction correctly. I used .pbs given in starter code and mopdified it to run for my python script and required time (10 minutes). I could not visually identify any difference in .pbs file I generated and you provided. So I kept scratching my head to see where did I go wrong. Although, using pbs file given in starter code, I coukld get my python script to run.
 
 3. **Where else did you run your job? How did the setup compare to your run on Ocelote?**
 
